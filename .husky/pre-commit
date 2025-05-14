@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run export check script
+npx ts-node scripts/check-exports.ts
+
+# Run ESLint
+npm run lint
