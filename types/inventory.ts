@@ -46,10 +46,31 @@ export type Installation = {
   status: string
 }
 
-// Update the MeterItem type to emphasize serial number tracking
+// Add MeterType definition
+export type MeterType = {
+  id: string
+  name: string
+  manufacturer: string
+  model: string
+  description: string
+  category: string
+  phase: "single" | "three"
+  connectionType: string
+  maxCurrent: number
+  voltage: string
+  communicationType: string
+  features: string[]
+  imageUrl?: string
+  status: "active" | "discontinued" | "upcoming"
+  createdAt: string
+  updatedAt: string
+}
+
+// Update the MeterItem type to include meter type
 export type MeterItem = {
   id: string
   productId: string
+  meterTypeId: string // Reference to meter type
   meterNumber: string // This is the serial number (e.g., 58102527205)
   status: "in-stock" | "allocated" | "sold" | "installed" | "returned" | "faulty"
   location: string

@@ -5,8 +5,9 @@ import { useInventory } from "@/context/inventory-context"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Search, Plus } from "lucide-react"
+import { Search, Plus, Upload } from "lucide-react"
 import { AddMeter } from "./add-meter"
+import { BulkImportMeters } from "./bulk-import-meters"
 import { MeterInventory } from "./meter-inventory"
 import { isDataEmpty } from "@/lib/fallback-data"
 
@@ -14,6 +15,7 @@ export default function ProductsPage() {
   const { products, meters, loading, connectionStatus } = useInventory()
   const [searchQuery, setSearchQuery] = useState("")
   const [isAddingMeter, setIsAddingMeter] = useState(false)
+  const [isBulkImporting, setIsBulkImporting] = useState(false)
 
   // Handle loading state
   if (loading) {
@@ -38,10 +40,16 @@ export default function ProductsPage() {
         <p className="mb-8 max-w-md text-muted-foreground">
           You haven't added any products yet. Add your first product to get started.
         </p>
-        <Button onClick={() => setIsAddingMeter(true)}>
-          <Plus className="mr-2 h-4 w-4" /> Add Meter
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button onClick={() => setIsAddingMeter(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Add Meter
+          </Button>
+          <Button variant="outline" onClick={() => setIsBulkImporting(true)}>
+            <Upload className="mr-2 h-4 w-4" /> Bulk Import
+          </Button>
+        </div>
         {isAddingMeter && <AddMeter open={isAddingMeter} onOpenChange={setIsAddingMeter} />}
+        {isBulkImporting && <BulkImportMeters open={isBulkImporting} onOpenChange={setIsBulkImporting} />}
       </div>
     )
   }
@@ -72,9 +80,14 @@ export default function ProductsPage() {
     <div className="flex flex-col space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Products & Meters</h1>
-        <Button onClick={() => setIsAddingMeter(true)}>
-          <Plus className="mr-2 h-4 w-4" /> Add Meter
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => setIsBulkImporting(true)} variant="outline">
+            <Upload className="mr-2 h-4 w-4" /> Bulk Import
+          </Button>
+          <Button onClick={() => setIsAddingMeter(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Add Meter
+          </Button>
+        </div>
       </div>
 
       <div className="relative">
@@ -109,6 +122,7 @@ export default function ProductsPage() {
       </Tabs>
 
       {isAddingMeter && <AddMeter open={isAddingMeter} onOpenChange={setIsAddingMeter} />}
+      {isBulkImporting && <BulkImportMeters open={isBulkImporting} onOpenChange={setIsBulkImporting} />}
     </div>
   )
 }
