@@ -66,6 +66,24 @@ export type MeterType = {
   updatedAt: string
 }
 
+// Add Location definition
+export type Location = {
+  id: string
+  name: string
+  type: string
+  address: string
+  city: string
+  region?: string
+  postalCode?: string
+  country?: string
+  contactPerson?: string
+  contactPhone?: string
+  notes?: string
+  status: "active" | "inactive"
+  createdAt: string
+  updatedAt: string
+}
+
 // Update the MeterItem type to include meter type
 export type MeterItem = {
   id: string
